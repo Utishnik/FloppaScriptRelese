@@ -1,0 +1,24 @@
+Print("print 1 if create else 0 delete");
+int r;
+Scan(r);
+if(r==0)
+{
+    Print("Please print name folder");
+    str FolderName;
+    Scan(FolderName);
+    Print("Please print folder path");
+    str path;
+    Scan(path);
+    CreateFolder(FolderName,path);
+}
+else
+{
+    Print("Please print name folder");
+    str FolderName;
+    Scan(FolderName);
+    Print("Please print folder path");
+    str path;
+    Scan(path);
+    DeleteFolder(FolderName,path);
+
+}
