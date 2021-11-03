@@ -1,4 +1,4 @@
-Print("print 1 if create else 0 delete");
+Print("print 1 if create else 0 delete")
 int r;
 Scan(r);
 if(r==0)
