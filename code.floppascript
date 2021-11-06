@@ -1,8 +1,8 @@
 Print("print 1 if create else 0 delete")
 int r;
 Scan(r);
-if(r==0)
-{
+if(r==0);
+{;
     Print("Please print name folder");
     str FolderName;
     Scan(FolderName);
@@ -10,9 +10,9 @@ if(r==0)
     str path;
     Scan(path);
     CreateFolder(FolderName,path);
-}
-else
-{
+};
+else;
+{;
     Print("Please print name folder");
     str FolderName;
     Scan(FolderName);
@@ -21,4 +21,5 @@ else
     Scan(path);
     DeleteFolder(FolderName,path);
 
-}
+};
+
