@@ -54,7 +54,7 @@ int main(void)
     for(int i = 0;i<2000;i++)
         c[i]=' ';
     
-    char code[lenscount][100];
+    char code[3000]={" "};
 
 
         int ii=0;
@@ -63,14 +63,16 @@ int main(void)
 
         printf("\n");
     
-         while(!feof(f))
+        while(!feof(f))
         {
             if(fgets(c,2000,f)!=0)
             {
-                for(int i = 0;i<strlen(c);i++)
-                    code[ii][i]=c[i];
-                ii++;
-                printf(c);
+                if(find(c,";")==-1)
+                {
+                    printf("idi nahyi!\n");
+                    return -1;
+                }
+                strcat(code,c);
             }
         }   
 
@@ -82,9 +84,7 @@ int main(void)
 
     printf("%d\n",lenscount);
 
-    for(int i = 0;i<lenscount;i++)
-        for(int j = 0;j<100;j++)
-            printf("%c",code[i][j]);
+    //printf(code);
 
     const int countcommand=1;
 
@@ -93,25 +93,83 @@ int main(void)
 
     lenscount++;
 
+
     for(int i = 0;i<20;i++)
         commands[0][i]=comprint[i];
 
-    for(int i = 0;i<lenscount;i++)
+    int endstr=0;
+
+    for(int i = 0;i<3000;i++)
     {
-        if(find(code[i],";")==-1 )
-        {
-            printf("error ; str: %d",i+1);
-        }
+        if(code[i]==';')
+            endstr++;
+    }
+    int ind=0;
+    char codestr[endstr][200];
+
+    for(int i = 0;i<endstr;i++)
+        for(int j = 0;j<200;j++)
+            codestr[i][j]=' ';
+
+    int g=0;
+
+    for(int j = 0;j<3000;j++)
+    {
+       if(code[j]!=';') 
+           codestr[g][j]=code[j];
+       else
+       {
+           codestr[g][j]=code[j];
+           g++;
+       }
     }
 
 
+    printf("\n\n\n\n\n\n\n\n\n\n");
+
+
+for(int j = 0;j<endstr;j++)
+{
     for(int i = 0;i<countcommand;i++)
     {
         if(i==0)
         {
+            int startprinti=0;
+            int endprinti=0;
+            int skobkiind[2]={};
+            int kovichind[2]={};
+            int onekovichind=0;
+            if(find(codestr[j],commands[i])!=-1)
+            {
+                startprinti=find(codestr[j],commands[i]);
+                endprinti=startprinti+(strlen(commands[i])-1);
+            }
+            if(find(codestr[j],"(")!=-1)
+            {
+                skobkiind[0]=find(codestr[j],"(");
+            }
 
+            if(find(codestr[j],")")!=-1)
+            {
+                skobkiind[1]=find(codestr[j],")");
+            }
+
+              if(find(codestr[j],"\"")!=-1)
+            {
+                kovichind[0]=find(codestr[j],"\"");
+                
+            }
+
+            if(find(codestr[j],"\'")!=-1)
+            {
+                kovichind[1]=find(codestr[j],"\'");
+            }
+            for(int y = kovichind[0]+1;y<kovichind[1];y++)
+                printf("%c",codestr[j][y]);
         };
     }
+    printf("\n");
+}       
     
 
     printf("\n");
