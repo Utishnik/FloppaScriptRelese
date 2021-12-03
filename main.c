@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <Windows.h>
 #include <string.h>
 
 int find(char str[],char pstr[])
@@ -22,6 +23,7 @@ int find(char str[],char pstr[])
             else
             {
                 index=-1;
+                lenn=strlen(pstr);
                 break;
             }
         }
@@ -36,6 +38,23 @@ void Print2(char str[])
 
 int main(void)
 {
+
+    char symbolDp[53]={" "};
+    char s;
+
+    for(int i=0;i<26;i++)
+    {
+        symbolDp[i]=65+i;
+    }
+    for(int i=0;i<26;i++)
+    {
+        symbolDp[i+25]=97+i;
+    }
+
+    symbolDp[52]='_';
+    printf("\n%s\n",symbolDp);
+
+
     FILE *f;
     int lenscount=0;
     char c[2000];
@@ -69,7 +88,8 @@ int main(void)
             {
                 if(find(c,";")==-1)
                 {
-                    printf("idi nahyi!\n");
+                    printf("idi nahyi!\n1\n1\n1n\n1");
+                    Sleep(500);
                     return -1;
                 }
                 strcat(code,c);
@@ -86,10 +106,15 @@ int main(void)
 
     //printf(code);
 
-    const int countcommand=1;
+    const int countcommand=2;
 
     char commands[countcommand][20];
     char comprint[20]={"Print"};
+    char *pr="Print";
+    char *intt=":int ";
+    comprint[0]=pr;
+    comprint[1]=intt;
+
 
     lenscount++;
 
@@ -104,7 +129,6 @@ int main(void)
         if(code[i]==';')
             endstr++;
     }
-    int ind=0;
     char codestr[endstr][200];
 
     for(int i = 0;i<endstr;i++)
@@ -127,6 +151,29 @@ int main(void)
 
     printf("\n\n\n\n\n\n\n\n\n\n");
 
+    int integercounts=0;
+    printf("\n");
+;
+
+    printf("\n");
+
+    for(int i = 0;i<endstr;i++)
+        if(find(codestr[i],"integer_create")!=-1)
+            integercounts++;
+
+    printf("\n---integer counts--- %d \n",integercounts);
+
+
+
+
+    int ini=0;
+    int yy=0;
+
+    char integer_name[integercounts][30];
+    int interger_value[integercounts];
+
+
+    printf("\n\n\n");
 
 for(int j = 0;j<endstr;j++)
 {
@@ -166,12 +213,19 @@ for(int j = 0;j<endstr;j++)
             }
             for(int y = kovichind[0]+1;y<kovichind[1];y++)
                 printf("%c",codestr[j][y]);
-        };
+        }
+        else if(i==1)
+        {
+            if((find(codestr[j],"int")!=-1))
+            {
+                
+            }
+        }
     }
     printf("\n");
 }       
     
-
+    printf("\n\n\n");
     printf("\n");
     system("pause");
 }
