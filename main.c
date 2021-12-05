@@ -31,10 +31,6 @@ int find(char str[],char pstr[])
     return index;
 }
 
-void Print2(char str[])
-{
-    printf("%s",str);
-}
 
 int main(void)
 {
@@ -124,11 +120,7 @@ int main(void)
 
     int endstr=0;
 
-    for(int i = 0;i<3000;i++)
-    {
-        if(code[i]==';')
-            endstr++;
-    }
+
     char codestr[endstr][200];
 
     for(int i = 0;i<endstr;i++)
@@ -136,16 +128,25 @@ int main(void)
             codestr[i][j]=' ';
 
     int g=0;
+    int lencode=strlen(code);
 
-    for(int j = 0;j<3000;j++)
+    int jhi=0;
+    for(int j = 0;j<lencode;j++)
     {
        if(code[j]!=';') 
-           codestr[g][j]=code[j];
+       {
+           codestr[g][jhi]=code[j];
+           jhi=0;
+       }
        else
        {
            codestr[g][j]=code[j];
-           g++;
+           if(g+1<lenscount)
+              g++;
+            else 
+                break;
        }
+       jhi++;
     }
 
 
@@ -153,13 +154,22 @@ int main(void)
 
     int integercounts=0;
     printf("\n");
-;
 
     printf("\n");
 
     for(int i = 0;i<endstr;i++)
+    {
+        for(int j = 0;j<200;j++)
+            printf("%c",codestr[i][j]);
+        printf("\n");
+    }
+
+    printf("%d\n",strlen(codestr[0]));
+    for(int i = 0;i<endstr;i++)
         if(find(codestr[i],"integer_create")!=-1)
+        {
             integercounts++;
+        }
 
     printf("\n---integer counts--- %d \n",integercounts);
 
