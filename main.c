@@ -52,190 +52,55 @@ int main(void)
 
 
     FILE *f;
-    int lenscount=0;
-    char c[2000];
-
+    char c[200];
+    int countlen=0;
+    char code[10000];
 
     f=fopen("code.floppascript","r");
         while(!feof(f))
         {
             if(fgets(c,2000,f)!=0)
             {
-                lenscount++;
+                strcat(code,c);
             }
         }
     fclose(f);
 
-    for(int i = 0;i<2000;i++)
-        c[i]=' ';
-    
-    char code[3000]={" "};
+    printf("\n\n%s\n\n",code);
 
-
-        int ii=0;
-
-        f=fopen("code.floppascript","r");
-
-        printf("\n");
-    
-        while(!feof(f))
-        {
-            if(fgets(c,2000,f)!=0)
-            {
-                if(find(c,";")==-1)
-                {
-                    printf("idi nahyi!\n1\n1\n1n\n1");
-                    Sleep(500);
-                    return -1;
-                }
-                strcat(code,c);
-            }
-        }   
-
-    
-
-    fclose(f);
-
-    printf("\n\n\n\n");
-
-    printf("%d\n",lenscount);
-
-    //printf(code);
-
-    const int countcommand=2;
-
-    char commands[countcommand][20];
-    char comprint[20]={"Print"};
-    char *pr="Print";
-    char *intt=":int ";
-    comprint[0]=pr;
-    comprint[1]=intt;
-
-
-    lenscount++;
-
-
-    for(int i = 0;i<20;i++)
-        commands[0][i]=comprint[i];
-
-    int endstr=0;
-
-
-    char codestr[endstr][200];
-
-    for(int i = 0;i<endstr;i++)
-        for(int j = 0;j<200;j++)
-            codestr[i][j]=' ';
-
-    int g=0;
     int lencode=strlen(code);
 
-    int jhi=0;
-    for(int j = 0;j<lencode;j++)
+    int counts_string=0;
+
+    for(int i = 0;i<lencode;i++)
     {
-       if(code[j]!=';') 
-       {
-           codestr[g][jhi]=code[j];
-           jhi=0;
-       }
-       else
-       {
-           codestr[g][j]=code[j];
-           if(g+1<lenscount)
-              g++;
-            else 
-                break;
-       }
-       jhi++;
+        if(code[i]==';')
+            counts_string++;
     }
 
+    char codestr[counts_string][200];
 
-    printf("\n\n\n\n\n\n\n\n\n\n");
+    printf("\ncstring %d \n",counts_string);
+    int yy=0;
+    for(int j = 0;j<counts_string;)
+        for(int i = 0;i<200;)
+        {
+            if(code[yy]!='\n')
+                codestr[j][i]=code[yy];
+            else
+            {
+                j++;
+            }
+            yy++;
+        }
 
-    int integercounts=0;
-    printf("\n");
-
-    printf("\n");
-
-    for(int i = 0;i<endstr;i++)
+    for(int i = 0;i<counts_string;i++)
     {
         for(int j = 0;j<200;j++)
             printf("%c",codestr[i][j]);
         printf("\n");
     }
 
-    printf("%d\n",strlen(codestr[0]));
-    for(int i = 0;i<endstr;i++)
-        if(find(codestr[i],"integer_create")!=-1)
-        {
-            integercounts++;
-        }
-
-    printf("\n---integer counts--- %d \n",integercounts);
-
-
-
-
-    int ini=0;
-    int yy=0;
-
-    char integer_name[integercounts][30];
-    int interger_value[integercounts];
-
-
-    printf("\n\n\n");
-
-for(int j = 0;j<endstr;j++)
-{
-    for(int i = 0;i<countcommand;i++)
-    {
-        if(i==0)
-        {
-            int startprinti=0;
-            int endprinti=0;
-            int skobkiind[2]={};
-            int kovichind[2]={};
-            int onekovichind=0;
-            if(find(codestr[j],commands[i])!=-1)
-            {
-                startprinti=find(codestr[j],commands[i]);
-                endprinti=startprinti+(strlen(commands[i])-1);
-            }
-            if(find(codestr[j],"(")!=-1)
-            {
-                skobkiind[0]=find(codestr[j],"(");
-            }
-
-            if(find(codestr[j],")")!=-1)
-            {
-                skobkiind[1]=find(codestr[j],")");
-            }
-
-              if(find(codestr[j],"\"")!=-1)
-            {
-                kovichind[0]=find(codestr[j],"\"");
-                
-            }
-
-            if(find(codestr[j],"\'")!=-1)
-            {
-                kovichind[1]=find(codestr[j],"\'");
-            }
-            for(int y = kovichind[0]+1;y<kovichind[1];y++)
-                printf("%c",codestr[j][y]);
-        }
-        else if(i==1)
-        {
-            if((find(codestr[j],"int")!=-1))
-            {
-                
-            }
-        }
-    }
-    printf("\n");
-}       
-    
-    printf("\n\n\n");
-    printf("\n");
+     
     system("pause");
 }

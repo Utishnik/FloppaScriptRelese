@@ -1,6 +1,4 @@
-start;
 Print("Floppa');
 Print("Top!');
 Print("1');
 integer_create(alfa);
-end;
