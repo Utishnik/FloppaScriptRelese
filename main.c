@@ -34,7 +34,7 @@ int find(char str[],char pstr[])
 
 int main(void)
 {
-
+    
     char symbolDp[53]={" "};
     char s;
 
@@ -80,12 +80,18 @@ int main(void)
 
     char codestr[counts_string][200];
 
+    for(int i = 0;i<counts_string;i++)
+    {
+        for(int j = 0;j<200;j++)
+            codestr[i][j]=' ';
+    }
+
     printf("\ncstring %d \n",counts_string);
     int yy=0;
     for(int j = 0;j<counts_string;)
-        for(int i = 0;i<200;)
+        for(int i = 0;i<200;i++)
         {
-            if(code[yy]!='\n')
+            if(code[yy]!=';')
                 codestr[j][i]=code[yy];
             else
             {
@@ -93,6 +99,34 @@ int main(void)
             }
             yy++;
         }
+    int indexstartend[counts_string];
+
+/*
+    for(int i = 0;i<counts_string;i++)
+    {
+        if(find(codestr[i],";")==-1)
+        {
+            printf("poshel nahuy!!!!\n");
+            return -1;
+        }
+        else
+        {
+            indexstartend[i]=find(codestr[i],";");
+        }
+
+    }
+*/
+
+    for(int i = 0;i<counts_string;i++)
+    {
+        for(int j = 0;j<200;j++)
+        {
+            if(j>indexstartend[i])
+                codestr[i][j]=' ';
+        }
+    }
+
+    printf("------------------------------------\n");
 
     for(int i = 0;i<counts_string;i++)
     {

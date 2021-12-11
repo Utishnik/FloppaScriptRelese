@@ -1,4 +1,4 @@
-Print("Floppa');
-Print("Top!');
-Print("1');
-integer_create(alfa);
+Print("Floppa");
+Print("Top!");
+Print("1");
+int $alfa;
