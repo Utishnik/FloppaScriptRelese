@@ -3,6 +3,11 @@
 #include <Windows.h>
 #include <string.h>
 
+char TokenTypes[13][25]={
+    "PRINT","OSCOB","KOVICHKA","TEXT","ENTER","ZKOVICHKA","ZSCOB","ENDSTR",
+    "INT","NAME_PEREMNOY","SCAN","PEREMENAYA_ARG","PLUS"
+};
+
 int find(char str[],char pstr[])
 {
     int index=-1;
@@ -31,11 +36,41 @@ int find(char str[],char pstr[])
     return index;
 }
 
+typedef struct 
+{
+    char text[80];
+    char type[25];
+    int pos;
+}TokenLexer;
+
+void Lexer(char code[],TokenLexer Ltokens[10000])
+{
+    int position=0;
+    TokenLexer tokens[10000];
+
+    while(1){
+        if(position>=strlen(code))
+            break;
+        char token[30]={" "};
+        int index=0;
+
+        while(code[position]!=' ')
+        {
+            token[index]=code[position];
+        }
+        printf("\n%s\n",token);
+        position++;
+    }
+
+    for(int i = 0;i<10000;i++)
+        Ltokens[i]=tokens[i];
+}
+
 
 int main(void)
 {
     
-    char symbolDp[53]={" "};
+    char symbolDp[59]={" "};
     char s;
 
     for(int i=0;i<26;i++)
@@ -47,9 +82,18 @@ int main(void)
         symbolDp[i+25]=97+i;
     }
 
-    symbolDp[52]='_';
-    printf("\n%s\n",symbolDp);
+    symbolDp[51]='_';
+    char cifri[10]={"0123456789"};
+    int y=0;
+    for(int i = 52;i<62;i++)
+    {
+        symbolDp[i]=cifri[y];
+        y++;
+    }
 
+    ////////////////////////////////////////////////////
+    printf("\n%s\n",symbolDp);
+    ////////////////////////////////////////////////////
 
     FILE *f;
     char c[200];
@@ -70,70 +114,12 @@ int main(void)
 
     int lencode=strlen(code);
 
-    int counts_string=0;
-
     for(int i = 0;i<lencode;i++)
-    {
-        if(code[i]==';')
-            counts_string++;
-    }
+        if(code[i]=='\n')
+            code[i]=' ';
 
-    char codestr[counts_string][200];
+    printf("\n\n%s\n",code);
 
-    for(int i = 0;i<counts_string;i++)
-    {
-        for(int j = 0;j<200;j++)
-            codestr[i][j]=' ';
-    }
-
-    printf("\ncstring %d \n",counts_string);
-    int yy=0;
-    for(int j = 0;j<counts_string;)
-        for(int i = 0;i<200;i++)
-        {
-            if(code[yy]!=';')
-                codestr[j][i]=code[yy];
-            else
-            {
-                j++;
-            }
-            yy++;
-        }
-    int indexstartend[counts_string];
-
-/*
-    for(int i = 0;i<counts_string;i++)
-    {
-        if(find(codestr[i],";")==-1)
-        {
-            printf("poshel nahuy!!!!\n");
-            return -1;
-        }
-        else
-        {
-            indexstartend[i]=find(codestr[i],";");
-        }
-
-    }
-*/
-
-    for(int i = 0;i<counts_string;i++)
-    {
-        for(int j = 0;j<200;j++)
-        {
-            if(j>indexstartend[i])
-                codestr[i][j]=' ';
-        }
-    }
-
-    printf("------------------------------------\n");
-
-    for(int i = 0;i<counts_string;i++)
-    {
-        for(int j = 0;j<200;j++)
-            printf("%c",codestr[i][j]);
-        printf("\n");
-    }
 
      
     system("pause");

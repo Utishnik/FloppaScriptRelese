@@ -1,4 +1,9 @@
-Print("Floppa");
-Print("Top!");
-Print("1");
-int $alfa;
+Print("input 2 number:\n");
+int $a;
+int $b;
+Scan(a);
+Scan(b);
+Print("sum=\n");
+Printf(a+b);
+Printf("\n");
+
