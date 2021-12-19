@@ -4,9 +4,17 @@
 #include <string.h>
 
 char TokenTypes[13][25]={
-    "PRINT","OSCOB","KOVICHKA","TEXT","ENTER","ZKOVICHKA","ZSCOB","ENDSTR",
-    "INT","NAME_PEREMNOY","SCAN","PEREMENAYA_ARG","PLUS"
+    "PRINT","OSCOB","KOVICHKA","TEXT","ENTER","ZSCOB","ENDSTR",
+    "INT","NAME_PEREMNOY","SCAN","PEREMENAYA_ARG","PLUS","NUMBER"
 };
+
+
+char TokenDefinition[9][25]={
+    "Print","(","\"","\n",")",";",
+    "int","Scan","+"
+};
+
+//you need to make a definition for the text of the name of the change, etc.
 
 int find(char str[],char pstr[])
 {
@@ -36,33 +44,62 @@ int find(char str[],char pstr[])
     return index;
 }
 
-typedef struct 
+struct TokenLexer
 {
     char text[80];
     char type[25];
-    int pos;
-}TokenLexer;
+};
 
-void Lexer(char code[],TokenLexer Ltokens[10000])
+void Lexer(char code[],struct TokenLexer Ltokens[1000])
 {
     int position=0;
-    TokenLexer tokens[10000];
+    int end=0;
+    struct TokenLexer tokens[1000];
+    int intokens=0;
+    int indexe=0;
+    int iteration=0;
+
+    char textt[52];
+                          
+    int lenn=strlen(code);
 
     while(1){
         if(position>=strlen(code))
             break;
-        char token[30]={" "};
-        int index=0;
 
-        while(code[position]!=' ')
-        {
-            token[index]=code[position];
-        }
-        printf("\n%s\n",token);
-        position++;
+    char *PRINT="Print";    
+
+    if(find(code,"Print")!=-1)
+    {
+        int index=find(code,"Print");
+
+        for(int i = 0;i<5;i++)
+           tokens[iteration].text[i+end]=PRINT[i];
+
+        iteration++;
+        end+=strlen(PRINT)+1;
+    }
+    
+
+    for(int i=0;i<26;i++)
+    {
+        textt[i]=65+i;
+    }
+    for(int i=0;i<26;i++)
+    {
+        textt[i+25]=97+i;
     }
 
-    for(int i = 0;i<10000;i++)
+    // test printf("\n\n%s\n\n",textt);
+    
+        position++;
+        intokens++;
+    }
+
+    for(int i=0;i<iteration;i++)
+        printf("%s ",tokens[i].text);
+
+    for(int i = 0;i<1000;i++)
         Ltokens[i]=tokens[i];
 }
 
@@ -70,7 +107,7 @@ void Lexer(char code[],TokenLexer Ltokens[10000])
 int main(void)
 {
     
-    char symbolDp[59]={" "};
+    char symbolDp[55]={" "};
     char s;
 
     for(int i=0;i<26;i++)
@@ -110,17 +147,20 @@ int main(void)
         }
     fclose(f);
 
+    for(int i = 0;i<10000;i++)
+    {
+        if(code[i]=='\n')
+            code[i]=' ';
+    }
+
+
     printf("\n\n%s\n\n",code);
 
     int lencode=strlen(code);
 
-    for(int i = 0;i<lencode;i++)
-        if(code[i]=='\n')
-            code[i]=' ';
+    struct TokenLexer tokens[1000];
 
-    printf("\n\n%s\n",code);
-
-
+    Lexer(code,tokens);
      
     system("pause");
 }

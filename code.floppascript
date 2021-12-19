@@ -4,6 +4,5 @@ int $b;
 Scan(a);
 Scan(b);
 Print("sum=\n");
-Printf(a+b);
-Printf("\n");
-
+Print(a+b);
+Print("\n");
