@@ -52,52 +52,9 @@ struct TokenLexer
 
 void Lexer(char code[],struct TokenLexer Ltokens[1000])
 {
-    int position=0;
-    int end=0;
     struct TokenLexer tokens[1000];
-    int intokens=0;
-    int indexe=0;
-    int iteration=0;
 
-    char textt[52];
-                          
-    int lenn=strlen(code);
-
-    while(1){
-        if(position>=strlen(code))
-            break;
-
-    char *PRINT="Print";    
-
-    if(find(code,"Print")!=-1)
-    {
-        int index=find(code,"Print");
-
-        for(int i = 0;i<5;i++)
-           tokens[iteration].text[i+end]=PRINT[i];
-
-        iteration++;
-        end+=strlen(PRINT)+1;
-    }
     
-
-    for(int i=0;i<26;i++)
-    {
-        textt[i]=65+i;
-    }
-    for(int i=0;i<26;i++)
-    {
-        textt[i+25]=97+i;
-    }
-
-    // test printf("\n\n%s\n\n",textt);
-    
-        position++;
-        intokens++;
-    }
-
-    for(int i=0;i<iteration;i++)
-        printf("%s ",tokens[i].text);
 
     for(int i = 0;i<1000;i++)
         Ltokens[i]=tokens[i];
