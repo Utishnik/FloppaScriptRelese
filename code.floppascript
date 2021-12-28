@@ -6,3 +6,5 @@ Scan(b);
 Print("sum=\n");
 Print(a+b);
 Print("\n");
+Print("end");
+Print("OMEGA");

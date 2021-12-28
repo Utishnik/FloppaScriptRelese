@@ -16,11 +16,11 @@ char TokenDefinition[9][25]={
 
 //you need to make a definition for the text of the name of the change, etc.
 
-int find(char str[],char pstr[])
+int find(char str[],char pstr[],int start_index)
 {
     int index=-1;
     int lenn=strlen(pstr);
-    for(int i = 0;i<strlen(str);i++)
+    for(int i = start_index;i<strlen(str);i++)
     {
         for(int j = 0;j<strlen(pstr);j++)
         {
@@ -52,8 +52,53 @@ struct TokenLexer
 
 void Lexer(char code[],struct TokenLexer Ltokens[1000])
 {
+    char *PRINT="PRINT";
+    char *Print="Print";
     struct TokenLexer tokens[1000];
+    int codepos=0;
+    int indexTokenLexer=0;
 
+    while(codepos<strlen(code))
+    {
+        BOOL breakcicl=TRUE;
+
+        if(strlen(code)-codepos<=0)
+        {
+            printf("End code\n");
+            break;
+        }
+        
+        if(find(code,"Print",codepos)!=-1)
+        {
+            for(int i=0;i<strlen(PRINT);i++)
+                tokens[indexTokenLexer].type[i]=PRINT[i];
+            for(int i = 0;i<5;i++)
+                tokens[indexTokenLexer].text[i]=Print[i];
+            
+            printf("***%d***\n",codepos);
+            
+            indexTokenLexer++;
+            
+            codepos=find(code,"Print",codepos)+5+1;
+            breakcicl=FALSE;
+        }
+
+        //printf("%d\n",codepos);
+
+        if(breakcicl==TRUE)
+        {
+            printf("\nEND\n");
+            break;
+        }
+        printf("\n----CODEPOS INFORMATION= %d ----\n",codepos);
+    }
+
+    printf("TOKENS COUNT = %d\n",indexTokenLexer);
+
+    printf("\nEND CODEPOS = %d\n",codepos);
+
+    for(int i = 0;i<indexTokenLexer;i++)
+        printf("\n\n%s\n\n",tokens[i].text);
     
 
     for(int i = 0;i<1000;i++)
@@ -109,15 +154,18 @@ int main(void)
         if(code[i]=='\n')
             code[i]=' ';
     }
+    //
 
 
     printf("\n\n%s\n\n",code);
 
     int lencode=strlen(code);
 
-    struct TokenLexer tokens[1000];
+    printf("\n----LENCODE = %d----\n",lencode);
 
-    Lexer(code,tokens);
+    struct TokenLexer Tokens[1000];
+
+    Lexer(code,Tokens);    
      
     system("pause");
 }
