@@ -51,12 +51,25 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
     const int CodeTokenCount=2;
     int codepos[CodeTokenCount];
     int indexTokenLexer=0;
+    BOOL exitCicl=FALSE;
+    int IndexTOKENS[CodeTokenCount];
 
     for(int i=0;i<CodeTokenCount;i++)
         codepos[i]=0;
 
-    while(1)
+    while(exitCicl==FALSE)
     {
+        for(int i=0;i<CodeTokenCount;i++)
+        {
+            if(codepos[i]>=strlen(code))
+            {
+                exitCicl=TRUE;
+                break;
+            }
+            if(exitCicl)
+                break;
+        }
+
         BOOL breakcicl=TRUE;
         
         if(find(code,"Print",codepos[0])!=-1)
@@ -66,7 +79,7 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
             for(int i = 0;i<5;i++)
                 tokens[indexTokenLexer].text[i]=Print[i];
             
-            printf("PRINT***%d***\n",codepos[0]);
+            printf("***%d***\n",codepos[0]);
             
             indexTokenLexer++;
             
@@ -81,13 +94,9 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
             for(int i = 0;i<1;i++)
                 tokens[indexTokenLexer].text[i]='(';
             
-            printf("OSCOB***%d***\n",codepos[1]);
+            printf("***%d***\n",codepos[1]);
             indexTokenLexer++;
-
-            codepos[1]=find(code,"(",codepos[1])+1;
-            breakcicl=FALSE;
         }
-        printf("\n");
 
         //printf("%d\n",codepos);
 
@@ -96,10 +105,12 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
             printf("\nEND\n");
             break;
         }
+        printf("\n----CODEPOS INFORMATION= %d ----\n",codepos);
     }
 
     printf("TOKENS COUNT = %d\n",indexTokenLexer);
 
+    printf("\nEND CODEPOS = %d\n",codepos);
 
     printf("\n");
 
