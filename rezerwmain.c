@@ -43,6 +43,12 @@ struct TokenLexer
     char type[25];
 };
 
+struct TokenStartIndex
+{
+    int codepos;
+    char text[50];
+};
+
 void Lexer(char code[],struct TokenLexer Ltokens[1000])
 {
     char *PRINT="PRINT";
@@ -51,83 +57,127 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
     const int CodeTokenCount=2;
     int codepos[CodeTokenCount];
     int indexTokenLexer=0;
-    BOOL exitCicl=FALSE;
-    int IndexTOKENS[CodeTokenCount];
 
     for(int i=0;i<CodeTokenCount;i++)
         codepos[i]=0;
 
-    while(exitCicl==FALSE)
-    {
-        for(int i=0;i<CodeTokenCount;i++)
+    struct TokenStartIndex TSI[1000];
+
+    for(int i=0;i<1000;i++)
+        for(int j=0;j<50;j++)
+            TSI[i].text[j]=' ';
+    ///////////////////////////
+    for(int i=0;i<1000;i++)
+            TSI[i].codepos=0;
+
+    for(int i=0;i<CodeTokenCount;i++)
+        TSI[i].codepos=0;
+
+    char PrintText[5]={"Print"};
+    char OSCOB[1]={'('};
+
+        while(1)
         {
-            if(codepos[i]>=strlen(code))
+            BOOL breakcicl=TRUE;
+
+            printf("-Debug-\n");
+            if(find(code,"Print",codepos[0])!=-1){ 
+                printf("1\n");
+                TSI[0].codepos=find(code,"Print",codepos[0]);
+                printf("2\n");
+                for(int i=0;i<strlen(Print);i++) 
+                    TSI[0].text[i]=PrintText[i];
+                printf("* IF PRINT *\n");
+            }
+            else{ 
+                TSI[0].codepos=-1;
+                for(int i=0;i<strlen(Print);i++)
+                    TSI[0].text[i]=PrintText[i];
+
+                printf("* ELSE PRINT\n"); 
+            }
+            printf("-Debug-\n");
+            if(find(code,"(",codepos[1])!=-1) 
             {
-                exitCicl=TRUE;
+                TSI[1].codepos=find(code,"(",codepos[1]);
+                for(int i=0;i<strlen(OSCOB);i++)
+                    TSI[1].text[i]=OSCOB[i];
+            }
+            else{ 
+                TSI[1].codepos=-1;
+            }
+
+            printf("End\n");
+            break;
+            system("pause");
+
+
+            
+
+                /*
+                if(find(code,"Print",codepos[0])!=-1)
+                {
+                    for(int i=0;i<strlen(PRINT);i++)
+                        tokens[indexTokenLexer].type[i]=PRINT[i];
+                    for(int i = 0;i<5;i++)
+                        tokens[indexTokenLexer].text[i]=Print[i];
+                    
+                    printf("PRINT***%d***\n",codepos[0]);
+                    
+                    indexTokenLexer++;
+                    
+                    codepos[0]=find(code,"Print",codepos[0])+5+1;
+                    breakcicl=FALSE;
+                }
+                if(find(code,"(",codepos[1])!=-1)
+                {
+                    char *OSCOB="OSCOB";
+                    for(int i=0;i<strlen(OSCOB);i++)
+                        tokens[indexTokenLexer].type[i]=OSCOB[i];
+                    for(int i = 0;i<1;i++)
+                        tokens[indexTokenLexer].text[i]='(';
+                    
+                    printf("OSCOB***%d***\n",codepos[1]);
+                    indexTokenLexer++;
+
+                    codepos[1]=find(code,"(",codepos[1])+1;
+                    breakcicl=FALSE;
+                }
+                
+            printf("\n");
+
+            //printf("%d\n",codepos);
+
+            if(breakcicl==TRUE)
+            {
+                printf("\nEND\n");
                 break;
             }
-            if(exitCicl)
-                break;
         }
 
-        BOOL breakcicl=TRUE;
+        printf("TOKENS COUNT = %d\n",indexTokenLexer);
+
+
+        printf("\n");
+
+        for(int i = 0;i<indexTokenLexer;i++)
+            printf("%s ",tokens[i].text);
+
+        printf("\n======================================\n");
+
+        for(int i = 0;i<indexTokenLexer;i++)
+            printf("%s ",tokens[i].type);
+
+        printf("\n");
         
-        if(find(code,"Print",codepos[0])!=-1)
-        {
-            for(int i=0;i<strlen(PRINT);i++)
-                tokens[indexTokenLexer].type[i]=PRINT[i];
-            for(int i = 0;i<5;i++)
-                tokens[indexTokenLexer].text[i]=Print[i];
-            
-            printf("***%d***\n",codepos[0]);
-            
-            indexTokenLexer++;
-            
-            codepos[0]=find(code,"Print",codepos[0])+5+1;
-            breakcicl=FALSE;
-        }
-        if(find(code,"(",codepos[1])!=-1)
-        {
-            char *OSCOB="OSCOB";
-            for(int i=0;i<strlen(OSCOB);i++)
-                tokens[indexTokenLexer].type[i]=OSCOB[i];
-            for(int i = 0;i<1;i++)
-                tokens[indexTokenLexer].text[i]='(';
-            
-            printf("***%d***\n",codepos[1]);
-            indexTokenLexer++;
-        }
 
-        //printf("%d\n",codepos);
-
-        if(breakcicl==TRUE)
-        {
-            printf("\nEND\n");
-            break;
-        }
-        printf("\n----CODEPOS INFORMATION= %d ----\n",codepos);
+        for(int i = 0;i<1000;i++)
+            Ltokens[i]=tokens[i];
+        
+        */
     }
-
-    printf("TOKENS COUNT = %d\n",indexTokenLexer);
-
-    printf("\nEND CODEPOS = %d\n",codepos);
-
-    printf("\n");
-
-    for(int i = 0;i<indexTokenLexer;i++)
-        printf("%s ",tokens[i].text);
-
-    printf("\n======================================\n");
-
-    for(int i = 0;i<indexTokenLexer;i++)
-        printf("%s ",tokens[i].type);
-
-    printf("\n");
-    
-
-    for(int i = 0;i<1000;i++)
-        Ltokens[i]=tokens[i];
 }
+
 
 
 int main(void)
