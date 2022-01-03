@@ -2,4 +2,4 @@
 
 
 
-floppaskript open source programming language
+floppascript open source programming language to work with the window file system
