@@ -48,6 +48,61 @@ struct TokenStartIndex
     int codepos;
     char text[50];
 };
+    
+void TokenSort(struct TokenStartIndex *s_arr,int start,int end)
+{
+    if(start<end){
+        int left=start;
+        int right=end;
+        int middle=s_arr[(start + end)/2].codepos;
+
+        do {
+            while(s_arr[left].codepos<middle)
+                left++;
+            while(s_arr[right].codepos>middle)
+                right--;
+            if(left<=right){
+                int tmp=s_arr[left].codepos;
+                s_arr[left].codepos=s_arr[right].codepos;
+                s_arr[right].codepos=tmp;
+                left++;
+                right--;
+            }
+
+        }while(left < right);
+        TokenSort(s_arr,start,right);
+        TokenSort(s_arr,left,end);
+    }
+}
+
+/*==============================================================*
+void SortInt(int *s_arr,int start,int end)                    
+{
+        if(start<end){
+        int left=start;
+        int right=end;
+        int middle=s_arr[(start + end)/2];
+
+        do {
+            while(s_arr[left]<middle)
+                left++;
+            while(s_arr[right]>middle)
+                right--;
+            if(left<=right){
+                int tmp=s_arr[left];
+                s_arr[left]=s_arr[right];
+                s_arr[right]=tmp;
+                left++;
+                right--;
+            }
+
+        }while(left < right);
+        SortInt(s_arr,start,right);
+        SortInt(s_arr,left,end);
+    }
+}
+================================================================*
+*/
 
 void Lexer(char code[],struct TokenLexer Ltokens[1000])
 {
@@ -57,62 +112,144 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
     const int CodeTokenCount=2;
     int codepos[CodeTokenCount];
     int indexTokenLexer=0;
+    const int LEN_TSI=1000;
 
     for(int i=0;i<CodeTokenCount;i++)
         codepos[i]=0;
 
-    struct TokenStartIndex TSI[1000];
+    struct TokenStartIndex TSI[CodeTokenCount][LEN_TSI];
 
-    for(int i=0;i<1000;i++)
-        for(int j=0;j<50;j++)
-            TSI[i].text[j]=' ';
+
+    for(int k=0;k<CodeTokenCount;k++)
+        for(int i=0;i<LEN_TSI;i++)
+            for(int j=0;j<50;j++)
+                TSI[k][i].text[j]=' ';
     ///////////////////////////
-    for(int i=0;i<1000;i++)
-            TSI[i].codepos=0;
-
-    for(int i=0;i<CodeTokenCount;i++)
-        TSI[i].codepos=0;
+    for(int k=0;k<CodeTokenCount;k++)
+        for(int i=0;i<LEN_TSI;i++)
+                TSI[k][i].codepos=0;
 
     char PrintText[5]={"Print"};
     char OSCOB[1]={'('};
+    int TokenCount[CodeTokenCount];
+
+    for(int i=0;i<CodeTokenCount;i++)
+        TokenCount[i]=0;
 
         while(1)
         {
+
             BOOL breakcicl=TRUE;
 
-            printf("-Debug-\n");
-            if(find(code,"Print",codepos[0])!=-1){ 
-                printf("1\n");
-                TSI[0].codepos=find(code,"Print",codepos[0]);
-                printf("2\n");
-                for(int i=0;i<strlen(Print);i++) 
-                    TSI[0].text[i]=PrintText[i];
-                printf("* IF PRINT *\n");
-            }
-            else{ 
-                TSI[0].codepos=-1;
-                for(int i=0;i<strlen(Print);i++)
-                    TSI[0].text[i]=PrintText[i];
-
-                printf("* ELSE PRINT\n"); 
-            }
-            printf("-Debug-\n");
-            if(find(code,"(",codepos[1])!=-1) 
+            for(int i=0;i<LEN_TSI;i++)
             {
-                TSI[1].codepos=find(code,"(",codepos[1]);
-                for(int i=0;i<strlen(OSCOB);i++)
-                    TSI[1].text[i]=OSCOB[i];
+                    //printf("-Debug-\n");
+                    if(find(code,"Print",codepos[0])!=-1){ 
+                        //printf("1\n");
+                        TSI[0][i].codepos=find(code,"Print",codepos[0]);
+                        //printf("2\n");
+                        for(int p=0;p<strlen(Print);p++) 
+                            TSI[0][i].text[p]=PrintText[p];
+                        //printf("* IF PRINT *\n");
+                        codepos[0]=find(code,"Print",codepos[0])+5+1;
+                        TokenCount[0]++;
+                    }
+                    //printf("-Debug-\n");
+                    if(find(code,"(",codepos[1])!=-1) 
+                    {
+                        TSI[1][i].codepos=find(code,"(",codepos[1])+1;
+                        TSI[1][i].text[0]='(';
+                        codepos[1]=find(code,"(",codepos[1])+1;
+                        TokenCount[1]++;
+                    }
+                //printf("END - %d\n",i);
             }
-            else{ 
-                TSI[1].codepos=-1;
+            printf("\n\n\n");
+
+            printf("================================\n");
+
+            for(int i=0;i<CodeTokenCount;i++)
+            {
+                printf("\n");
+                for(int k=0;k<CodeTokenCount;k++)
+                {
+                    for(int j=0;j<TokenCount[k];j++)
+                    {
+                        printf("NUMBER - %d",TSI[i][j].codepos);
+
+                        printf(" ");
+
+                        for(int h=0;h<strlen(TSI[i][j].text);h++)
+                            printf("%c",TSI[i][j].text[h]);
+                    }
+                    printf("\n");
+                }
             }
 
-            printf("End\n");
-            break;
-            system("pause");
+            printf("\n\n\n================================\n");
+//********************************************************************
 
+            int Sort[CodeTokenCount][1000];
 
+            for(int i=0;i<CodeTokenCount;i++)
+                for(int j=0;j<1000;j++)
+                    Sort[i][j]=0;
+
+            for(int i=0;i<CodeTokenCount;i++)
+                for(int j=0;j<1000;j++)
+                    Sort[i][j]=TSI[i][j].codepos;
+
+            printf("do sort:\n\n\n");
+
+            for(int i=0;i<CodeTokenCount;i++)
+            {
+                for(int j=0;j<1000;j++)
+                    printf("%d ",Sort[i][j]);
+                printf("\n===================================\n");
+            }
+                
             
+            /*
+            for(int i=0;i<CodeTokenCount;i++)
+            {
+                TokenSort(TSI[i],0,1000);
+            }
+            */
+
+    
+
+
+            // sorting algorithm created and tested
+            printf("\n\n\n");
+//********************************************************************
+            printf("================================\n");
+
+            for(int i=0;i<CodeTokenCount;i++)
+            {
+                printf("\n");
+                for(int k=0;k<CodeTokenCount;k++)
+                {
+                    for(int j=0;j<TokenCount[k];j++)
+                    {
+                        printf("NUMBER - %d",TSI[i][j].codepos);
+
+                        printf(" ");
+
+                        for(int h=0;h<strlen(TSI[i][j].text);h++)
+                            printf("%c",TSI[i][j].text[h]);
+                    }
+                    printf("\n");
+                }
+            }
+
+            printf("================================\n");
+
+            printf("End\ngcc main.c -o floppa\n");            
+            break;
+
+            //--------------------------------------------------------------------------
+            //сделать алгоритм сортировки
+            //--------------------------------------------------------------------------
 
                 /*
                 if(find(code,"Print",codepos[0])!=-1)
@@ -183,6 +320,7 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
 int main(void)
 {
     
+
     char symbolDp[55]={" "};
     char s;
 
@@ -212,7 +350,13 @@ int main(void)
     char c[200];
     int countlen=0;
     char code[10000];
-
+    /*
+        for(int i = 0;i<10000;i++)
+        {
+            if(code[i]=='\n')
+                code[i]=' ';
+        }
+    */
     f=fopen("code.floppascript","r");
         while(!feof(f))
         {
@@ -223,11 +367,6 @@ int main(void)
         }
     fclose(f);
 
-    for(int i = 0;i<10000;i++)
-    {
-        if(code[i]=='\n')
-            code[i]=' ';
-    }
     //
 
 
