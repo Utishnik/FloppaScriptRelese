@@ -208,6 +208,7 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
                             Sort[i][j].text[k]=TSI[i][j].text[k]; 
                         }
                     // bag naverno tut no eto ne tochno
+                    //убрать удваевание
                 }
             }
 
