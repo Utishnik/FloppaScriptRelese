@@ -136,10 +136,11 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
     for(int i=0;i<CodeTokenCount;i++)
         TokenCount[i]=0;
 
+        BOOL breakcicl=TRUE;
+
         while(1)
         {
 
-            BOOL breakcicl=TRUE;
 
             for(int i=0;i<LEN_TSI;i++)
             {
@@ -153,6 +154,7 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
                         //printf("* IF PRINT *\n");
                         codepos[0]=find(code,"Print",codepos[0])+5+1;
                         TokenCount[0]++;
+                        breakcicl=FALSE;
                     }
                     //printf("-Debug-\n");
                     if(find(code,"(",codepos[1])!=-1) 
@@ -189,34 +191,51 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
             printf("\n\n\n================================\n");
 //********************************************************************
 
-            int Sort[CodeTokenCount][1000];
+            struct TokenStartIndex Sort[CodeTokenCount][LEN_TSI];
 
             for(int i=0;i<CodeTokenCount;i++)
-                for(int j=0;j<1000;j++)
-                    Sort[i][j]=0;
+            {
+                for(int j=0;j<1000;j++){
+                    Sort[i][j].codepos=0;
+                    Sort[i][j].text[0]=' ';}
+            }
 
-            for(int i=0;i<CodeTokenCount;i++)
-                for(int j=0;j<1000;j++)
-                    Sort[i][j]=TSI[i][j].codepos;
+            for(int i=0;i<CodeTokenCount;i++){
+                for(int j=0;j<1000;j++){
+                    Sort[i][j].codepos=TSI[i][j].codepos;
+
+                        for(int k=0;k<50;k++){
+                            Sort[i][j].text[k]=TSI[i][j].text[k]; 
+                        }
+                }
+            }
 
             printf("do sort:\n\n\n");
 
             for(int i=0;i<CodeTokenCount;i++)
             {
                 for(int j=0;j<1000;j++)
-                    printf("%d ",Sort[i][j]);
+                    printf("%d ",Sort[i][j].codepos);
                 printf("\n===================================\n");
             }
-                
-            
-            /*
+
+            printf("\n\ntext:\n\n");
+
+//*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
             for(int i=0;i<CodeTokenCount;i++)
             {
-                TokenSort(TSI[i],0,1000);
+                printf("\n");
+                for(int k=0;k<CodeTokenCount;k++)
+                {
+                    for(int j=0;j<TokenCount[k];j++)
+                    {
+                        for(int h=0;h<strlen(TSI[i][j].text);h++)
+                            printf("%c",TSI[i][j].text[h]);
+                    }
+                    printf("\n");
+                }
             }
-            */
-
-    
+//=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=
 
 
             // sorting algorithm created and tested
@@ -244,75 +263,49 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
 
             printf("================================\n");
 
-            printf("End\ngcc main.c -o floppa\n");            
-            break;
 
-            //--------------------------------------------------------------------------
-            //сделать алгоритм сортировки
-            //--------------------------------------------------------------------------
+//\=====================================================================================================
+//=\====================================================================================================
+//==\===================================================================================================
+//===\==================================================================================================
+//====\=================================================================================================
+//=====\================================================================================================
+//======\===============================================================================================
 
-                /*
-                if(find(code,"Print",codepos[0])!=-1)
-                {
-                    for(int i=0;i<strlen(PRINT);i++)
-                        tokens[indexTokenLexer].type[i]=PRINT[i];
-                    for(int i = 0;i<5;i++)
-                        tokens[indexTokenLexer].text[i]=Print[i];
-                    
-                    printf("PRINT***%d***\n",codepos[0]);
-                    
-                    indexTokenLexer++;
-                    
-                    codepos[0]=find(code,"Print",codepos[0])+5+1;
-                    breakcicl=FALSE;
-                }
-                if(find(code,"(",codepos[1])!=-1)
-                {
-                    char *OSCOB="OSCOB";
-                    for(int i=0;i<strlen(OSCOB);i++)
-                        tokens[indexTokenLexer].type[i]=OSCOB[i];
-                    for(int i = 0;i<1;i++)
-                        tokens[indexTokenLexer].text[i]='(';
-                    
-                    printf("OSCOB***%d***\n",codepos[1]);
-                    indexTokenLexer++;
+//УЬРАТЬ ВВЫВОД НЕНУЖНЫХ ТЫСЯЧ СИМВОЛОВ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-                    codepos[1]=find(code,"(",codepos[1])+1;
-                    breakcicl=FALSE;
-                }
-                
-            printf("\n");
 
-            //printf("%d\n",codepos);
-
-            if(breakcicl==TRUE)
+        for(int i=0;i<CodeTokenCount;i++)
+        {
+            for(int j=0;j<1000;j++)
             {
-                printf("\nEND\n");
-                break;
+                
             }
         }
 
-        printf("TOKENS COUNT = %d\n",indexTokenLexer);
 
 
-        printf("\n");
+        //printf("%d\n",codepos);
 
-        for(int i = 0;i<indexTokenLexer;i++)
-            printf("%s ",tokens[i].text);
 
-        printf("\n======================================\n");
+        printf("TOKENS COUNT = %d\n",indexTokenLexer); 
 
-        for(int i = 0;i<indexTokenLexer;i++)
-            printf("%s ",tokens[i].type);
+//shutdown if there is an error
+        if(GetKeyState(VK_ESCAPE)<=0)
+            break;
+//=============================
 
-        printf("\n");
-        
 
-        for(int i = 0;i<1000;i++)
-            Ltokens[i]=tokens[i];
-        
-        */
+/*----------------------------------------   
+        if(breakcicl==TRUE)
+        {
+            printf("\nEND\n");
+            break;
+        }
     }
+------------------------------------------*/
+        }
 }
 
 
