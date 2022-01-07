@@ -195,18 +195,19 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
 
             for(int i=0;i<CodeTokenCount;i++)
             {
-                for(int j=0;j<1000;j++){
+                for(int j=0;j<LEN_TSI;j++){
                     Sort[i][j].codepos=0;
                     Sort[i][j].text[0]=' ';}
             }
 
             for(int i=0;i<CodeTokenCount;i++){
-                for(int j=0;j<1000;j++){
-                    Sort[i][j].codepos=TSI[i][j].codepos;
+                for(int j=0;j<LEN_TSI;j++){
+                        Sort[i][j].codepos=TSI[i][j].codepos;
 
                         for(int k=0;k<50;k++){
                             Sort[i][j].text[k]=TSI[i][j].text[k]; 
                         }
+                    // bag naverno tut no eto ne tochno
                 }
             }
 
@@ -214,7 +215,7 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
 
             for(int i=0;i<CodeTokenCount;i++)
             {
-                for(int j=0;j<1000;j++)
+                for(int j=0;j<LEN_TSI;j++)
                     printf("%d ",Sort[i][j].codepos);
                 printf("\n===================================\n");
             }
@@ -222,6 +223,7 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
             printf("\n\ntext:\n\n");
 
 //*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+            printf("\nprint Sort array text:\n");
             for(int i=0;i<CodeTokenCount;i++)
             {
                 printf("\n");
@@ -229,12 +231,13 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
                 {
                     for(int j=0;j<TokenCount[k];j++)
                     {
-                        for(int h=0;h<strlen(TSI[i][j].text);h++)
-                            printf("%c",TSI[i][j].text[h]);
+                        for(int h=0;h<50;h++)
+                            printf("%c",Sort[i][j].text[h]);
                     }
                     printf("\n");
                 }
             }
+
 //=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=
 
 
@@ -305,10 +308,11 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
         }
     }
 ------------------------------------------*/
-        }
+    }
+    printf("\n\ngcc main.c -o floppa\n\n");
 }
 
-
+//       gcc main.c -o floppa
 
 int main(void)
 {
