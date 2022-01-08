@@ -106,10 +106,11 @@ void SortInt(int *s_arr,int start,int end)
 
 void Lexer(char code[],struct TokenLexer Ltokens[1000])
 {
+    //сейчас я хочу добавить третий токен (у меня есть тока print и ( )
     char *PRINT="PRINT";
     char *Print="Print";
     struct TokenLexer tokens[1000];
-    const int CodeTokenCount=2;
+    const int CodeTokenCount=3;
     int codepos[CodeTokenCount];
     int indexTokenLexer=0;
     const int LEN_TSI=1000;
@@ -131,6 +132,7 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
 
     char PrintText[5]={"Print"};
     char OSCOB[1]={'('};
+    char BSCOB[1]={')'};
     int TokenCount[CodeTokenCount];
 
     for(int i=0;i<CodeTokenCount;i++)
@@ -154,7 +156,6 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
                         //printf("* IF PRINT *\n");
                         codepos[0]=find(code,"Print",codepos[0])+5+1;
                         TokenCount[0]++;
-                        breakcicl=FALSE;
                     }
                     //printf("-Debug-\n");
                     if(find(code,"(",codepos[1])!=-1) 
@@ -163,6 +164,13 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
                         TSI[1][i].text[0]='(';
                         codepos[1]=find(code,"(",codepos[1])+1;
                         TokenCount[1]++;
+                    }
+                    if(find(code,")",codepos[2])!=-1)
+                    {
+                        TSI[2][i].codepos=find(code,")",codepos[2])+1;
+                        TSI[2][i].text[0]=')';
+                        codepos[2]=find(code,")",codepos[2])+1;
+                        TokenCount[2]++;
                     }
                 //printf("END - %d\n",i);
             }
@@ -223,31 +231,42 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
                     for(int h=0;h<50;h++)
                         Sort[k][j].text[h]=TSI[k][j].text[h];
                 }
-                    printf("\n");
             }
 
 //*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-            printf("NUMBERS:\n\n\n");
+           printf("TOKENS:\n\n\n");
 
             for(int k=0;k<CodeTokenCount;k++)
             {
                 for(int j=0;j<TokenCount[k];j++)
                 {
-                    printf("%d",Sort[k][j].codepos);  
+                    printf("%d ",Sort[k][j].codepos);  
                 }
                 printf("\n");
             }
 
+            int LenTokenSymbols[CodeTokenCount];
+
+            LenTokenSymbols[0]=5;
+            LenTokenSymbols[1]=1;
+            LenTokenSymbols[2]=1;
+
+            printf("\n===Types Token Count: %d ===\n",CodeTokenCount);
+
+/*
             printf("\n\ntext:\n\n");
 
-            printf("\nprint Sort array text:\n");
+            printf("\nprint Sort array text:\n\n");
+*/
+
+            printf("\n\n");
 
             for(int k=0;k<CodeTokenCount;k++)
             {
-                for(int j=0;j<TokenCount[k];j++)
-                {
-                    for(int h=0;h<50;h++)
-                        printf("%c",Sort[k][j].text[h]);
+                for(int j=0;j<TokenCount[k];j++){
+                    for(int h=0;h<LenTokenSymbols[k];h++)
+                            printf("%c",Sort[k][j].text[h]);
+                    printf(" ");
                 }
                 printf("\n");
             }
@@ -313,8 +332,10 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
 
         printf("\nToken Types,Token Counts:\n");
 
-        printf("\n=-=Print=-=  %d  \n",TokenCount[0]);
-        printf("\n=-=OSCOB=-=  %d  \n",TokenCount[1]);
+        printf("\n=-=PRINT=-=Print  %d  \n",TokenCount[0]);
+        printf("\n=-=OSCOB=-=(  %d  \n",TokenCount[1]);
+        printf("\n=-=BSCOB=-=)  %d  \n",TokenCount[2]);
+
 
 
 //shutdown if there is an error
