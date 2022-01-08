@@ -200,8 +200,9 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
                     Sort[i][j].text[0]=' ';}
             }
 
+/*
             for(int i=0;i<CodeTokenCount;i++){
-                for(int j=0;j<LEN_TSI;j++){
+                for(int j=0;j<TokenCount[i];j++){
                         Sort[i][j].codepos=TSI[i][j].codepos;
 
                         for(int k=0;k<50;k++){
@@ -211,32 +212,44 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
                     //убрать удваевание
                 }
             }
+*/
+            //printf("%c",Sort[i][j].text[h]);
 
-            printf("do sort:\n\n\n");
-
-            for(int i=0;i<CodeTokenCount;i++)
+            for(int k=0;k<CodeTokenCount;k++)
             {
-                for(int j=0;j<LEN_TSI;j++)
-                    printf("%d ",Sort[i][j].codepos);
-                printf("\n===================================\n");
+                for(int j=0;j<TokenCount[k];j++)
+                {
+                    Sort[k][j].codepos=TSI[k][j].codepos;  
+                    for(int h=0;h<50;h++)
+                        Sort[k][j].text[h]=TSI[k][j].text[h];
+                }
+                    printf("\n");
+            }
+
+//*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+            printf("NUMBERS:\n\n\n");
+
+            for(int k=0;k<CodeTokenCount;k++)
+            {
+                for(int j=0;j<TokenCount[k];j++)
+                {
+                    printf("%d",Sort[k][j].codepos);  
+                }
+                printf("\n");
             }
 
             printf("\n\ntext:\n\n");
 
-//*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
             printf("\nprint Sort array text:\n");
-            for(int i=0;i<CodeTokenCount;i++)
+
+            for(int k=0;k<CodeTokenCount;k++)
             {
-                printf("\n");
-                for(int k=0;k<CodeTokenCount;k++)
+                for(int j=0;j<TokenCount[k];j++)
                 {
-                    for(int j=0;j<TokenCount[k];j++)
-                    {
-                        for(int h=0;h<50;h++)
-                            printf("%c",Sort[i][j].text[h]);
-                    }
-                    printf("\n");
+                    for(int h=0;h<50;h++)
+                        printf("%c",Sort[k][j].text[h]);
                 }
+                printf("\n");
             }
 
 //=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=
@@ -247,6 +260,7 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
 //********************************************************************
             printf("================================\n");
 
+/*
             for(int i=0;i<CodeTokenCount;i++)
             {
                 printf("\n");
@@ -264,6 +278,7 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
                     printf("\n");
                 }
             }
+*/
 
             printf("================================\n");
 
@@ -295,6 +310,13 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
 
         printf("TOKENS COUNT = %d\n",indexTokenLexer); 
 
+
+        printf("\nToken Types,Token Counts:\n");
+
+        printf("\n=-=Print=-=  %d  \n",TokenCount[0]);
+        printf("\n=-=OSCOB=-=  %d  \n",TokenCount[1]);
+
+
 //shutdown if there is an error
         if(GetKeyState(VK_ESCAPE)<=0)
             break;
@@ -309,8 +331,9 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
         }
     }
 ------------------------------------------*/
+        printf("\n\ngcc main.c -o floppa\n\n");
+        break;
     }
-    printf("\n\ngcc main.c -o floppa\n\n");
 }
 
 //       gcc main.c -o floppa
