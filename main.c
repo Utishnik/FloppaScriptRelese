@@ -110,7 +110,7 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
     char *PRINT="PRINT";
     char *Print="Print";
     struct TokenLexer tokens[1000];
-    const int CodeTokenCount=3;
+    const int CodeTokenCount=5;
     int codepos[CodeTokenCount];
     int indexTokenLexer=0;
     const int LEN_TSI=1000;
@@ -135,6 +135,15 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
     char BSCOB[1]={')'};
     int TokenCount[CodeTokenCount];
 
+    char TextTokenesDignation[26*2]={" "};
+
+    for(int i=0;i<26;i++)
+        TextTokenesDignation[i]=i+65;
+    for(int i=0;i<26;i++)
+        TextTokenesDignation[i+25]=i+97;
+
+    printf("\n----text==== %s ----\n",TextTokenesDignation);
+
     for(int i=0;i<CodeTokenCount;i++)
         TokenCount[i]=0;
 
@@ -158,21 +167,34 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
                         TokenCount[0]++;
                     }
                     //printf("-Debug-\n");
-                    if(find(code,"(",codepos[1])!=-1) 
+                    else if(find(code,"(",codepos[1])!=-1) 
                     {
                         TSI[1][i].codepos=find(code,"(",codepos[1])+1;
                         TSI[1][i].text[0]='(';
                         codepos[1]=find(code,"(",codepos[1])+1;
                         TokenCount[1]++;
                     }
-                    if(find(code,")",codepos[2])!=-1)
+                    else if(find(code,")",codepos[2])!=-1)
                     {
                         TSI[2][i].codepos=find(code,")",codepos[2])+1;
                         TSI[2][i].text[0]=')';
                         codepos[2]=find(code,")",codepos[2])+1;
                         TokenCount[2]++;
                     }
-                //printf("END - %d\n",i);
+                    else if(find(code,"\"",codepos[3])!=-1)
+                    {
+                        TSI[3][i].codepos=find(code,"\"",codepos[3])+1;
+                        TSI[3][i].text[0]='\"';
+                        codepos[3]=find(code,"\"",codepos[3])+1;
+                        TokenCount[3]++;                        
+                    }
+                for(int k=0;k<1000;k++)
+                {
+                   for(int j=0;i<56;i++){
+
+                   }
+                }
+
             }
             printf("\n\n\n");
 
@@ -250,6 +272,7 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
             LenTokenSymbols[0]=5;
             LenTokenSymbols[1]=1;
             LenTokenSymbols[2]=1;
+            LenTokenSymbols[3]=1;
 
             printf("\n===Types Token Count: %d ===\n",CodeTokenCount);
 
@@ -310,10 +333,6 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
 //=====\================================================================================================
 //======\===============================================================================================
 
-//УЬРАТЬ ВВЫВОД НЕНУЖНЫХ ТЫСЯЧ СИМВОЛОВ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
         for(int i=0;i<CodeTokenCount;i++)
         {
             for(int j=0;j<1000;j++)
@@ -331,11 +350,12 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
 
 
         printf("\nToken Types,Token Counts:\n");
-
+        printf("\n========================================");
         printf("\n=-=PRINT=-=Print  %d  \n",TokenCount[0]);
         printf("\n=-=OSCOB=-=(  %d  \n",TokenCount[1]);
         printf("\n=-=BSCOB=-=)  %d  \n",TokenCount[2]);
-
+        printf("\n=-=COVCH=-=  %d  \n",TokenCount[3]);
+        printf("===========================================\n");
 
 
 //shutdown if there is an error
