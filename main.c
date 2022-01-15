@@ -113,6 +113,7 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
     const int CodeTokenCount=5;
     int codepos[CodeTokenCount];
     int indexTokenLexer=0;
+    int LTTAN=1000;
     const int LEN_TSI=1000;
 
     for(int i=0;i<CodeTokenCount;i++)
@@ -133,14 +134,45 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
     char PrintText[5]={"Print"};
     char OSCOB[1]={'('};
     char BSCOB[1]={')'};
+    char COVCH[1]={'\"'};
+
+
     int TokenCount[CodeTokenCount];
 
-    char TextTokenesDignation[26*2]={" "};
+
+    char TokenText[CodeTokenCount][40];
+
+    for(int i=0;i<CodeTokenCount;i++)
+    {
+        for(int j=0;j<40;j++)
+        {
+            TokenText[i][j]='~';
+        }
+    }
+    for(int i=0;i<strlen(PrintText);i++)
+        TokenText[0][i]=PrintText[i];
+    for(int i=0;i<strlen(OSCOB);i++)
+        TokenText[1][i]=OSCOB[i];
+    for(int i=0;i<strlen(BSCOB);i++)
+        TokenText[2][i]=BSCOB[i];
+    for(int i=0;i<strlen(COVCH);i++)
+        TokenText[3][i]=COVCH[i];
+
+
+
+
+    char TextTokenesDignation[26*2+4]={" "};
 
     for(int i=0;i<26;i++)
         TextTokenesDignation[i]=i+65;
     for(int i=0;i<26;i++)
         TextTokenesDignation[i+25]=i+97;
+
+    TextTokenesDignation[26+25]=',';
+    TextTokenesDignation[27+25]='!';
+    TextTokenesDignation[27+25]='?';
+    TextTokenesDignation[28+25]=' ';
+
 
     printf("\n----text==== %s ----\n",TextTokenesDignation);
 
@@ -188,13 +220,13 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
                         codepos[3]=find(code,"\"",codepos[3])+1;
                         TokenCount[3]++;                        
                     }
-                for(int k=0;k<1000;k++)
-                {
-                   for(int j=0;i<56;i++){
+//===================
+                    {
+                        char text[LTTAN];
 
-                   }
-                }
 
+                    }
+//===================
             }
             printf("\n\n\n");
 
