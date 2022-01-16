@@ -8,6 +8,8 @@
     "INT","NAME_PEREMNOY","SCAN","PEREMENAYA_ARG","PLUS","NUMBER"
 */
 
+char code[10000];
+
 
 int find(char str[],char pstr[],int start_index)
 {
@@ -106,7 +108,7 @@ void SortInt(int *s_arr,int start,int end)
 
 void Lexer(char code[],struct TokenLexer Ltokens[1000])
 {
-    //сейчас я хочу добавить третий токен (у меня есть тока print и ( )
+    printf("deb1\n");    
     char *PRINT="PRINT";
     char *Print="Print";
     struct TokenLexer tokens[1000];
@@ -130,6 +132,8 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
     for(int k=0;k<CodeTokenCount;k++)
         for(int i=0;i<LEN_TSI;i++)
                 TSI[k][i].codepos=0;
+
+    printf("deb2\n");
 
     char PrintText[5]={"Print"};
     char OSCOB[1]={'('};
@@ -158,6 +162,7 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
     for(int i=0;i<strlen(COVCH);i++)
         TokenText[3][i]=COVCH[i];
 
+    printf("deb 3\n");
 
 
 
@@ -173,7 +178,44 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
     TextTokenesDignation[27+25]='?';
     TextTokenesDignation[28+25]=' ';
 
+    printf("deb5\n");
+//text
+//---error
+    {
+            char text[10000]={" "};
+            int TokenStartIndexer[1000];
 
+            int kk=0;
+            
+            for(int i=0;i<10000;i++){
+                for(int j=0;j<sizeof(TextTokenesDignation);j++){
+                    if(code[i]==TextTokenesDignation[j])
+                    {
+                        char codeone[10000];
+                        codeone[0]=TextTokenesDignation[j];
+                        for(int k=1;k<10000;k++){
+                            for(int y=0;y<sizeof(TextTokenesDignation);y++){
+                                if(code[k]==TextTokenesDignation[y]){
+                                    codeone[k]=TextTokenesDignation[y];
+                                }
+                                printf("0900\n");
+                            }
+                            kk=k;
+                            printf("111\n");
+                            i=k;
+                        }
+                        printf("99\n");
+                    }
+                    else {i=kk;break;};
+                    printf("2\n");
+            }
+            printf("1,i= %d \n",i);
+        }
+    }
+//--error
+    printf("deb6\n");
+
+  
     printf("\n----text==== %s ----\n",TextTokenesDignation);
 
     for(int i=0;i<CodeTokenCount;i++)
@@ -221,11 +263,6 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
                         TokenCount[3]++;                        
                     }
 //===================
-                    {
-                        char text[LTTAN];
-
-
-                    }
 //===================
             }
             printf("\n\n\n");
@@ -443,7 +480,6 @@ int main(void)
     FILE *f;
     char c[200];
     int countlen=0;
-    char code[10000];
     /*
         for(int i = 0;i<10000;i++)
         {
@@ -472,7 +508,8 @@ int main(void)
 
     struct TokenLexer Tokens[1000];
 
+    printf("lexer singl\n");
     Lexer(code,Tokens);    
-     
+
     system("pause");
 }
