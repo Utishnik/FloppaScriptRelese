@@ -2,4 +2,5 @@
 
 
 
-floppascript open source programming language to work with the window file system
+floppascript open source programming language compiler to work with the Windows file system
+written in C
