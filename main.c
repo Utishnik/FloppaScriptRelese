@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <Windows.h>
 #include <string.h>
+#include <conio.h>
 
 /* TOKEN TYPES
     "PRINT","OSCOB","KOVICHKA","TEXT","ENTER","ZSCOB","ENDSTR",
@@ -186,11 +187,19 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
             int TokenStartIndexer[1000];
 
             int kk=0;
+            printf("\n\n\n------------------------------\n");
+            printf("%s\n",code);
+            printf("------------------------------\n\n\n");
             
             for(int i=0;i<10000;i++){
                 for(int j=0;j<sizeof(TextTokenesDignation);j++){
+                    //printf("debs\n");
+                    printf("code-%c  Text-%c\n",code[i],TextTokenesDignation[j]);
+                    //Sleep(750);
                     if(code[i]==TextTokenesDignation[j])
                     {
+                        printf("if singl\n");
+                        //цикл не входит в это условие
                         char codeone[10000];
                         codeone[0]=TextTokenesDignation[j];
                         for(int k=1;k<10000;k++){
@@ -206,10 +215,15 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
                         }
                         printf("99\n");
                     }
-                    else {i=kk;break;};
+                    else {i=kk;printf("BREAK CICL\n");;break;/*cicle no break*/};
                     printf("2\n");
             }
+
+            if(GetKeyState(VK_ESCAPE)==0)
+                break;
+            printf("!~#\n");
             printf("1,i= %d \n",i);
+            //printf("end\n");
         }
     }
 //--error
@@ -511,5 +525,5 @@ int main(void)
     printf("lexer singl\n");
     Lexer(code,Tokens);    
 
-    system("pause");
+    char c=getchar();
 }
