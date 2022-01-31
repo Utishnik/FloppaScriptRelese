@@ -1,5 +1,5 @@
 Print("input 2 number:\n");
-Print("sum=\n");
+Print("sum = \n");
 Print("\n");
 Print("end");
 Print("OMEGA");
