@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <Windows.h>
 #include <string.h>
-
+#include "../h/function.h"
 /* TOKEN TYPES
     "PRINT","OSCOB","KOVICHKA","TEXT","ENTER","ZSCOB","ENDSTR",
     "INT","NAME_PEREMNOY","SCAN","PEREMENAYA_ARG","PLUS","NUMBER"
@@ -10,34 +10,6 @@
 
 char code[10000];
 
-
-int find(char str[],char pstr[],int start_index)
-{
-    int index=-1;
-    int lenn=strlen(pstr);
-    for(int i = start_index;i<strlen(str);i++)
-    {
-        for(int j = 0;j<strlen(pstr);j++)
-        {
-            if(lenn==0)
-            {
-                return index;
-            }
-            if(str[j+i]==pstr[j])
-            {
-                lenn--;
-                index=i;
-            }
-            else
-            {
-                index=-1;
-                lenn=strlen(pstr);
-                break;
-            }
-        }
-    }
-    return index;
-}
 
 struct TokenLexer
 {
@@ -177,44 +149,49 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
     TextTokenesDignation[27+25]='!';
     TextTokenesDignation[27+25]='?';
     TextTokenesDignation[28+25]=' ';
+                                    //text tokens
 
-    printf("deb5\n");
-//text
-//---error
-    {
-            char text[10000]={" "};
-            int TokenStartIndexer[1000];
+    int tokeni=0;
+    int tokensi=0;
+    char TokensText[1000][100];
 
-            int kk=0;
-            
-            for(int i=0;i<10000;i++){
-                for(int j=0;j<sizeof(TextTokenesDignation);j++){
-                    if(code[i]==TextTokenesDignation[j])
-                    {
-                        char codeone[10000];
-                        codeone[0]=TextTokenesDignation[j];
-                        for(int k=1;k<10000;k++){
-                            for(int y=0;y<sizeof(TextTokenesDignation);y++){
-                                if(code[k]==TextTokenesDignation[y]){
-                                    codeone[k]=TextTokenesDignation[y];
-                                }
-                                printf("0900\n");
-                            }
-                            kk=k;
-                            printf("111\n");
-                            i=k;
-                        }
-                        printf("99\n");
-                    }
-                    else {i=kk;break;};
-                    printf("2\n");
-            }
-            printf("1,i= %d \n",i);
+
+    for(int i=0;i<1000;i++)
+        for(int j=0;j<100;j++)
+            TokensText[i][j]=' ';
+
+    printf("BEBRA!!!!!\n\n");
+/*
+    for(int i=0;i<1000;i++)
+        for(int j=0;j<100;j++)
+            printf("%c",TokensText[i][j]);
+*/
+    BOOL boolka=FALSE;
+
+    int debugtype=0;
+
+    char debagf=0;
+    for(int i=0;i<10000;i++){
+        if(code[i]!=' ')
+        {
+            TokensText[tokeni][tokensi]=code[i];
         }
+        else{
+            tokeni++;
+            TokensText[tokeni][tokensi]=code[i];
+        }
+        tokensi++;
+        boolka=FALSE;
+        //if(debugtype<100) printf("\nDEBAGIN INFORMATION -> %c , index = %d \n",code[i],i);
+        debugtype++;
     }
-//--error
-    printf("deb6\n");
 
+    for(int i=0;i<1000;i++)
+    {
+        for(int j=0;j<100;j++)
+            printf("%c",TokensText[i][j]);
+        printf(";");
+    }
   
     printf("\n----text==== %s ----\n",TextTokenesDignation);
 
@@ -497,7 +474,7 @@ int main(void)
         }
     fclose(f);
 
-    //
+    //te
 
 
     printf("\n\n%s\n\n",code);
@@ -511,5 +488,5 @@ int main(void)
     printf("lexer singl\n");
     Lexer(code,Tokens);    
 
-    system("pause");
+    system("exit");
 }
