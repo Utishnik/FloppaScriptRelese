@@ -155,6 +155,8 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
     int tokensi=0;
     char TokensText[1000][100];
 
+    printf("11111111111111111111111111111111111111111111111111111111\n");
+
 
     for(int i=0;i<1000;i++)
         for(int j=0;j<100;j++)
@@ -427,7 +429,6 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
 
 int main(void)
 {
-    
 
     char symbolDp[55]={" "};
     char s;
@@ -457,6 +458,7 @@ int main(void)
     FILE *f;
     char c[200];
     int countlen=0;
+
     /*
         for(int i = 0;i<10000;i++)
         {
@@ -464,7 +466,7 @@ int main(void)
                 code[i]=' ';
         }
     */
-    f=fopen("code.floppascript","r");
+    f=fopen("../../code.floppascript","r");
         while(!feof(f))
         {
             if(fgets(c,2000,f)!=0)
