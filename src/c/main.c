@@ -3,6 +3,8 @@
 #include <Windows.h>
 #include <string.h>
 #include "../h/function.h"
+
+#define DebugHuiZnaetKakoyBlyt
 /* TOKEN TYPES
     "PRINT","OSCOB","KOVICHKA","TEXT","ENTER","ZSCOB","ENDSTR",
     "INT","NAME_PEREMNOY","SCAN","PEREMENAYA_ARG","PLUS","NUMBER"
@@ -23,7 +25,7 @@ struct TokenStartIndex
     char text[50];
 };
     
-void TokenSort(struct TokenStartIndex *s_arr,int start,int end)
+void TokenSort(struct TokenStartIndex *s_arr,int start,int end)//быстрая сортировка вроде
 {
     if(start<end){
         int left=start;
@@ -44,6 +46,7 @@ void TokenSort(struct TokenStartIndex *s_arr,int start,int end)
             }
 
         }while(left < right);
+
         TokenSort(s_arr,start,right);
         TokenSort(s_arr,left,end);
     }
@@ -96,16 +99,18 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
     struct TokenStartIndex TSI[CodeTokenCount][LEN_TSI];
 
 
+    //start init
     for(int k=0;k<CodeTokenCount;k++)
         for(int i=0;i<LEN_TSI;i++)
             for(int j=0;j<50;j++)
                 TSI[k][i].text[j]=' ';
-    ///////////////////////////
+
     for(int k=0;k<CodeTokenCount;k++)
         for(int i=0;i<LEN_TSI;i++)
                 TSI[k][i].codepos=0;
 
-    printf("deb2\n");
+    printf("deb2\n");//хуйня
+
 
     char PrintText[5]={"Print"};
     char OSCOB[1]={'('};
@@ -115,14 +120,13 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
 
     int TokenCount[CodeTokenCount];
 
-
     char TokenText[CodeTokenCount][40];
 
     for(int i=0;i<CodeTokenCount;i++)
     {
         for(int j=0;j<40;j++)
         {
-            TokenText[i][j]='~';
+            TokenText[i][j]='.';
         }
     }
     for(int i=0;i<strlen(PrintText);i++)
@@ -155,14 +159,12 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
     int tokensi=0;
     char TokensText[1000][100];
 
-    printf("11111111111111111111111111111111111111111111111111111111\n");
 
 
     for(int i=0;i<1000;i++)
         for(int j=0;j<100;j++)
             TokensText[i][j]=' ';
 
-    printf("BEBRA!!!!!\n\n");
 /*
     for(int i=0;i<1000;i++)
         for(int j=0;j<100;j++)
@@ -173,7 +175,7 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
     int debugtype=0;
 
     char debagf=0;
-    for(int i=0;i<10000;i++){
+    for(int i=0;i<strlen(code);i++){
         if(code[i]!=' ')
         {
             TokensText[tokeni][tokensi]=code[i];
@@ -188,14 +190,16 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
         debugtype++;
     }
 
-    for(int i=0;i<1000;i++)
+
+    for(int i=0;i<tokeni;i++)
     {
-        for(int j=0;j<100;j++)
+        for(int j=0;j<tokensi;j++)
             printf("%c",TokensText[i][j]);
-        printf(";");
+        //printf("");//из за этого дохуй текста в консоли
+        printf("\n");
     }
   
-    printf("\n----text==== %s ----\n",TextTokenesDignation);
+    //printf("\n----text==== %s ----\n",TextTokenesDignation);
 
     for(int i=0;i<CodeTokenCount;i++)
         TokenCount[i]=0;
@@ -248,25 +252,22 @@ void Lexer(char code[],struct TokenLexer Ltokens[1000])
 
             printf("================================\n");
 
+#ifndef DebugHuiZnaetKakoyBlyt
             for(int i=0;i<CodeTokenCount;i++)
             {
                 printf("\n");
-                for(int k=0;k<CodeTokenCount;k++)
+                for(int j=0;j<LEN_TSI;+j++) 
                 {
-                    for(int j=0;j<TokenCount[k];j++)
-                    {
-                        printf("NUMBER - %d",TSI[i][j].codepos);
+                    printf("NUMBER - %d",TSI[i][j].codepos);
+                    for(int h=0;h<strlen(TSI[i][j].text);h++)
+                        printf("%c",TSI[i][j].text[h]);
 
-                        printf(" ");
-
-                        for(int h=0;h<strlen(TSI[i][j].text);h++)
-                            printf("%c",TSI[i][j].text[h]);
-                    }
                     printf("\n");
                 }
             }
 
             printf("\n\n\n================================\n");
+#endif
 //********************************************************************
 
             struct TokenStartIndex Sort[CodeTokenCount][LEN_TSI];
@@ -490,5 +491,6 @@ int main(void)
     printf("lexer singl\n");
     Lexer(code,Tokens);    
 
-    system("exit");
+    
+    system("pause");
 }
